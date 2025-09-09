@@ -1,0 +1,15 @@
+.nav {
+  background-color: blueviolet;
+}
+.nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav :global(.active) {
+  background-color: darkorange;
+}
+.active {
+  background-color: brown;
+}
