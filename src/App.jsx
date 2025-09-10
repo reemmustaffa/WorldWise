@@ -1,12 +1,35 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Product from "./Pages/Product";
-import Homepage from "./Pages/Homepage";
-import Pricing from "./Pages/Pricing";
-import PageNotFound from "./Pages/PageNotFound";
-import AppLayout from "./Pages/AppLayout";
-import Login from "./Pages/Login";
+import { useEffect, useState } from "react";
 
+import Homepage from "./Pages/Homepage";
+import Product from "./Pages/Product";
+import Pricing from "./Pages/Pricing";
+import AppLayout from "./Pages/AppLayout";
+import PageNotFound from "./Pages/PageNotFound";
+import Login from "./Pages/Login";
+import CityList from "./Components/CityList";
+import CountryList from "./Components/CountryList";
+
+const BASE_URL = "http://localhost:8000";
 function App() {
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsloading] = useState(false);
+  useEffect(function () {
+    async function fetchCities() {
+      try {
+        setIsloading(true);
+        const res = await fetch(`${BASE_URL}/cities`);
+        const data = await res.json();
+        setCities(data);
+      } catch {
+        alert("There is a something went wrong");
+      } finally {
+        setIsloading(false);
+      }
+    }
+    fetchCities();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -15,9 +38,18 @@ function App() {
         <Route path="pricing" element={<Pricing />} />
         <Route path="login" element={<Login />} />
         <Route path="app" element={<AppLayout />}>
-          <Route index element={<p>list of cities</p>} />
-          <Route path="cities" element={<p>list of cities</p>} />
-          <Route path="countries" element={<p>Countries</p>} />
+          <Route
+            index
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
+          <Route
+            path="cities"
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
+          <Route
+            path="countries"
+            element={<CountryList cities={cities} isLoading={isLoading} />}
+          />
           <Route path="form" element={<p>Form</p>} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
