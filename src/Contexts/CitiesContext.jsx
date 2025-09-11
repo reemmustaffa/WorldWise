@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 //CREATING CITIES CONTEXT
 
@@ -8,6 +8,7 @@ const BASE_URL = "http://localhost:8000";
 function CitiesProvider({ children }) {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsloading] = useState(false);
+
   useEffect(function () {
     async function fetchCities() {
       try {
@@ -31,4 +32,10 @@ function CitiesProvider({ children }) {
   );
 }
 
-export { CitiesProvider, CitiesContext };
+function useCities() {
+  const context = useContext(CitiesContext);
+  if (context === undefined)
+    throw new Error("CitiesContext was used outside CitiesProvider ");
+  return context;
+}
+export { CitiesProvider, useCities };
