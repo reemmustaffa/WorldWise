@@ -10,14 +10,20 @@ import {
 } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { useCities } from "../Contexts/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
+import Button from "./Button";
 
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const { cities } = useCities();
-
   // قراءة query string من الـ URL
-
   const [searchParams] = useSearchParams();
+  const {
+    isLoading: isLoadingPosition,
+    position: geolocationPosition,
+    getPosition,
+  } = useGeolocation();
+
   const mapLat = searchParams.get("lat"); // lat دي الللي انا بعتتاها في الليك ك query string
   const mapLng = searchParams.get("lng"); // lng دي بردو اللي انا بعتها في اللينك
 
@@ -29,19 +35,35 @@ function Map() {
     [mapLat, mapLng]
   );
 
+  useEffect(
+    function () {
+      if (geolocationPosition)
+        setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+    },
+    [geolocationPosition]
+  );
+
   return (
     <div className={styles.mapContainer}>
+      {!geolocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "loading..." : "use your position"}
+        </Button>
+      )}
       {/* INCLUDING MAP WITH LEAFLET LIBRARY */}
+      {/* مكون الماب الأساسي */}
       <MapContainer
         center={mapPosition}
         zoom={8}
         scrollWheelZoom={true}
         className={styles.map}
       >
+        {/* شكل الخريطة (Tiles) */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
+        {/* رسم markers لكل مدينة */}
         {cities.map((city) => (
           <Marker
             position={[city.position.lat, city.position.lng]}
@@ -60,7 +82,6 @@ function Map() {
 }
 
 // مسؤول عن تغيير center بتاع الماب
-
 function ChangeCenter({ position }) {
   //Hook useMap بيديك access على الماب نفسها.
   const map = useMap();
