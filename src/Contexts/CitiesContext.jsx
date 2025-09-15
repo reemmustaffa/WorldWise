@@ -33,7 +33,7 @@ function CitiesProvider({ children }) {
       const data = await res.json();
       setCurrentCity(data);
     } catch {
-      alert("There is a something went wrong");
+      alert("There is a something went wrong with getting the current city");
     } finally {
       setIsloading(false);
     }
@@ -54,7 +54,21 @@ function CitiesProvider({ children }) {
       //عشان يحدث الاستيت وتظهر النتيجه علي طول من غير ريلود
       setCities((cities) => [...cities, data]);
     } catch {
-      alert("There is a something went wrong");
+      alert("There is a something went wrong with creating city");
+    } finally {
+      setIsloading(false);
+    }
+  }
+
+  async function deleteCity(id) {
+    try {
+      setIsloading(true);
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+      setCities((cities) => cities.filter((city) => city.id !== id));
+    } catch {
+      alert("There is a something went wrong with deleting city");
     } finally {
       setIsloading(false);
     }
@@ -62,7 +76,14 @@ function CitiesProvider({ children }) {
 
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, currentCity, getCity, createCity }}
+      value={{
+        cities,
+        isLoading,
+        currentCity,
+        getCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
