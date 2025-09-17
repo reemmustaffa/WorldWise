@@ -17,13 +17,13 @@ function City() {
   const { currentCity, getCity, isLoading } = useCities();
 
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(
     function () {
       getCity(id);
     },
-    [id]
+    [id, getCity]
   );
   const { cityName, emoji, date, notes } = currentCity;
 

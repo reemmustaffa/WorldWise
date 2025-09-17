@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 
 //CREATING CITIES CONTEXT
 
@@ -67,22 +73,26 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  async function getCity(id) {
-    //دا عشان لما اضغط علي نفس المدينه مره تانيه ميروحش يجبها من api تاني
-    if (Number(id) === currentCity.id) return;
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: "city/loaded", payLoad: data });
-    } catch {
-      dispatch({
-        type: "rejected",
-        payLoad: "There is a something went wrong with loading city",
-      });
-    }
-  }
+  const getCity = useCallback(
+    async function getCity(id) {
+      //دا عشان لما اضغط علي نفس المدينه مره تانيه ميروحش يجبها من api تاني
+      if (Number(id) === currentCity.id) return;
+      dispatch({ type: "loading" });
+      try {
+        const res = await fetch(`${BASE_URL}/cities/${id}`);
+        const data = await res.json();
+        dispatch({ type: "city/loaded", payLoad: data });
+      } catch {
+        dispatch({
+          type: "rejected",
+          payLoad: "There is a something went wrong with loading city",
+        });
+      }
+    },
+    [currentCity.id]
+  );
 
+  //انا عملت كدا لان كل مره يحصل ريندر هنا بيحصل طلب جديد فالبتالي الفانكشن دي هتتغير والمرجع بتاعها هيتغير فيحصهل الالاف الريكسوتز
   async function createCity(newCity) {
     dispatch({ type: "loading" });
     try {
