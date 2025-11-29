@@ -12,20 +12,18 @@ import { useEffect, useState } from "react";
 import { useCities } from "../Contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const { cities } = useCities();
   // قراءة query string من الـ URL
-  const [searchParams] = useSearchParams();
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
-
-  const mapLat = searchParams.get("lat"); // lat دي الللي انا بعتتاها في الليك ك query string
-  const mapLng = searchParams.get("lng"); // lng دي بردو اللي انا بعتها في اللينك
+  const [mapLat, mapLng] = useUrlPosition();
 
   // تحديث مكان الماب كلما الـ URL يتغير
   useEffect(
@@ -98,9 +96,9 @@ function DetectClick() {
   //Hook useMapEvent بيسمع لأي click على الماب.
   useMapEvent({
     click: (e) => {
-      console.log(e);
+      // console.log(e);
       //لما تدوس على الماب → بياخد الإحداثيات → يعمل navigate لصفحة form ويضيف الـ lat/lng في الـ URL.
-      navigate(`form?lat=${e.latlng.lat}&lang=${e.latlng.lng}`);
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
     },
   });
 }

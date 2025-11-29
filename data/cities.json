@@ -1,64 +1,52 @@
 {
   "cities": [
     {
-      "cityName": "Lisbon",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2027-10-31T15:59:59.138Z",
-      "notes": "My favorite city so far!",
-      "position": {
-        "lat": 38.727881642324164,
-        "lng": -9.140900099907554
-      },
-      "id": 73930385
-    },
-    {
-      "cityName": "Madrid",
+      "id": "0543",
+      "cityName": "Fortanete",
       "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
+      "date": "2025-09-15T10:06:43.481Z",
       "notes": "",
       "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
+        "lat": "40.51858495108251",
+        "lng": "-0.5544506593434352"
       },
-      "id": 17806751
+      "emoji": "🇪🇸"
     },
     {
-      "cityName": "Berlin",
-      "country": "Germany",
-      "emoji": "🇩🇪",
-      "date": "2027-02-12T09:24:11.863Z",
-      "notes": "Amazing 😃",
-      "position": {
-        "lat": 52.53586782505711,
-        "lng": 13.376933665713324
-      },
-      "id": 98443197
-    },
-    {
-      "cityName": "Fora",
-      "country": "Portugal",
-      "emoji": "🇵🇹",
-      "date": "2027-10-31T15:59:59.138Z",
-      "notes": "My favorite city so far!",
-      "position": {
-        "lat": 38.727881642324164,
-        "lng": -9.140900099907554
-      },
-      "id": 73930384
-    },
-    {
-      "cityName": "Barcelona",
+      "id": "41fb",
+      "cityName": "Montalban",
       "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2027-07-15T08:22:53.976Z",
+      "date": "2025-09-15T10:07:32.587Z",
       "notes": "",
       "position": {
-        "lat": 40.46635901755316,
-        "lng": -3.7133789062500004
+        "lat": "40.818389913160374",
+        "lng": "-0.796259545333984"
       },
-      "id": 17806756
+      "emoji": "🇪🇸"
+    },
+    {
+      "id": "5dd6",
+      "cityName": "Mas de Barberans",
+      "country": "Spain",
+      "date": "2025-09-15T10:07:57.995Z",
+      "notes": "",
+      "position": {
+        "lat": "40.74356505000049",
+        "lng": "0.3688196326205074"
+      },
+      "emoji": "🇪🇸"
+    },
+    {
+      "id": "67ab",
+      "cityName": "Almohaja",
+      "country": "Spain",
+      "date": "2025-09-15T11:06:49.211Z",
+      "notes": "",
+      "position": {
+        "lat": "40.618669685902056",
+        "lng": "-1.4503665634563958"
+      },
+      "emoji": "🇪🇸"
     }
   ]
 }
